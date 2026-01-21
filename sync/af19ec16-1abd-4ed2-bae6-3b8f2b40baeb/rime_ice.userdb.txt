@@ -1,0 +1,172 @@
+# Rime user dictionary
+#@/db_name	rime_ice
+#@/db_type	userdb
+#@/rime_version	1.16.0
+#@/tick	186
+#@/user_id	af19ec16-1abd-4ed2-bae6-3b8f2b40baeb
+ba zhe ge 	把这个	c=1 d=0.67032 t=186
+bi xia 	陛下	c=1 d=0.965605 t=186
+bian hua 	变化	c=1 d=1 t=186
+bu xiang 	不想	c=0 d=0.0882497 t=186
+bu xiang rang wo qu 	不想让我去	c=1 d=0.88692 t=186
+chen wei zhen 	陈伟贞	c=1 d=0.927743 t=186
+cheng xu 	程序	c=1 d=0.740818 t=186
+chi 	吃	c=1 d=0.970446 t=186
+chuan duan xiu 	穿短袖	c=1 d=0.995012 t=186
+chuang kou 	窗口	c=0 d=0.0744532 t=186
+chuang kou zhuang shi 	窗口装饰	c=1 d=0.748264 t=186
+chun hua 	春华	c=0 d=0.0927743 t=186
+ci ku 	词库	c=1 d=0.965605 t=186
+cong yi yuan 	从医院	c=1 d=0.985112 t=186
+cuo 	错	c=0 d=0.0822835 t=186
+cuo wu 	错误	c=1 d=0.941765 t=186
+cuo wu ma 	错误码	c=1 d=0.980199 t=186
+dao ru ci ku 	导入词库	c=1 d=1 t=178
+de 	的	c=8 d=5.88259 t=186
+de shi 	的是	c=0 d=0.066365 t=186
+de ya 	的呀	c=0 d=0.0995012 t=186
+deng deng 	等等	c=1 d=0.755784 t=186
+di ban 	地板	c=1 d=0.951229 t=186
+di fang 	地方	c=0 d=0.0826959 t=186
+di fang le 	地方了	c=1 d=0.831104 t=186
+dou 	都	c=2 d=1.86516 t=186
+dou xing 	都行	c=0 d=0.097531 t=186
+dou xing ya 	都行呀	c=1 d=0.980199 t=186
+er bu shi 	而不是	c=3 d=2.68058 t=186
+gan bu 	干不	c=0 d=0.0918512 t=186
+gan bu 	干部	c=0 d=0.0913931 t=186
+gan bu jin qu 	干不进去	c=2 d=1.87912 t=186
+gan bu jin qu 	干部进去	c=1 d=0.918512 t=186
+gan sha 	干啥	c=4 d=3.70245 t=186
+geng huan diao 	更换掉	c=1 d=0.650509 t=186
+gun chu lai 	滚出来	c=1 d=0.980199 t=186
+hai mei shuo 	还没说	c=1 d=0.822835 t=186
+hai shi 	还是	c=1 d=0.955997 t=186
+hai you 	还有	c=1 d=0.97531 t=186
+hai zai 	还在	c=1 d=0.878095 t=186
+hao de 	好的	c=1 d=0.694197 t=186
+hao qi lai ba 	好起来吧	c=1 d=0.869358 t=186
+he 	何	c=0 d=0.0927743 t=186
+he 	和	c=1 d=0.71177 t=186
+he chun hua 	何春华	c=1 d=0.932394 t=186
+hou xuan xiang 	候选项	c=1 d=0.900325 t=186
+hua wei 	华为	c=1 d=0.852144 t=186
+huan cheng 	换成	c=1 d=0.687289 t=186
+hui lai 	回来	c=1 d=0.965605 t=186
+hui lai le ma 	回来了吗	c=1 d=0.99005 t=186
+jia qiang le 	加强了	c=1 d=0.951229 t=186
+jin qu 	进去	c=0 d=0.183244 t=186
+jin tian 	今天	c=1 d=0.873716 t=186
+jue ding 	决定	c=1 d=0.83527 t=186
+ke neng 	可能	c=1 d=0.960789 t=186
+kong zhi de 	控制的	c=2 d=1.81931 t=186
+lan se 	蓝色	c=1 d=0.690734 t=186
+le 	了	c=1 d=1.04271 t=186
+li mian 	里面	c=4 d=3.21015 t=186
+ling wai yi ge 	另外一个	c=1 d=0.980199 t=186
+ma 	吗	c=1 d=1.07559 t=186
+mei you 	没有	c=2 d=1.94624 t=186
+mei zai 	没在	c=0 d=0.0878095 t=186
+na yi jia 	哪一家	c=0 d=0.0995012 t=186
+na yi jia de ya 	哪一家的呀	c=1 d=1 t=186
+neng 	能	c=1 d=0.865022 t=186
+ni qian mian 	你前面	c=1 d=0.814647 t=186
+ni zai na li ya 	你在哪里呀	c=1 d=0.960789 t=186
+ni zui jin 	你最近	c=1 d=0.99005 t=186
+niu ke 	牛可	c=1 d=0.927743 t=186
+niu ke 	牛客	c=1 d=0.932394 t=186
+nuan qi 	暖气	c=0 d=0.0985112 t=186
+o o o 	哦哦哦	c=1 d=0.995012 t=186
+pin yin 	拼音	c=1 d=1 t=177
+ping zheng 	平整	c=0 d=0.0937067 t=186
+qi zhong 	其中	c=1 d=0.759572 t=186
+qing ni 	请你	c=1 d=0.798516 t=186
+quan bu 	全部	c=2 d=1.33113 t=186
+rang 	让	c=1 d=0.826959 t=186
+rang wo qu 	让我去	c=0 d=0.0882497 t=186
+ru he 	如何	c=0 d=0.1 t=174
+ru he ba 	如何把	c=1 d=0.631284 t=186
+she zhi 	设置	c=0 d=0.0715338 t=186
+she zhi li mian 	设置里面	c=1 d=0.718924 t=186
+shen me shi hou 	什么时候	c=1 d=0.97531 t=186
+shen shi 	甚是	c=0 d=0.0995012 t=186
+shen shi wu liao 	甚是无聊	c=1 d=1 t=186
+sheng cheng 	生成	c=1 d=0.701173 t=186
+shi 	是	c=4 d=3.75874 t=186
+shi jie 	世界	c=5 d=4.93082 t=186
+shi you 	是由	c=2 d=1.71738 t=186
+shou bu leng 	手不冷	c=1 d=1 t=186
+shou shu 	手术	c=1 d=0.843665 t=186
+shuang pin 	双拼	c=1 d=0.985112 t=186
+suo fang 	缩放	c=3 d=2.75556 t=186
+ti huan 	替换	c=1 d=0.884802 t=186
+ti huan cuo 	替换错	c=1 d=0.826959 t=186
+wai guan 	外观	c=2 d=1.62418 t=186
+wai guan xuan xiang 	外观选项	c=1 d=0.927743 t=186
+wai guan yang shi 	外观样式	c=3 d=2.17539 t=186
+wang 	王	c=0 d=0.0965605 t=186
+wang yu heng 	王宇恒	c=1 d=0.970446 t=186
+wei wo 	为我	c=1 d=0.697676 t=186
+wo 	我	c=0 d=0.176873 t=186
+wo cao 	卧槽	c=1 d=0.937067 t=186
+wo dou bu zhi dao 	我都不知道	c=1 d=0.891366 t=186
+wo gai 	我该	c=0 d=0.1 t=178
+wo mei zai 	我没在	c=1 d=0.882497 t=186
+wo ru he 	我如何	c=1 d=1 t=175
+wo shi 	我是	c=0 d=0.1 t=183
+wo shi yong de 	我是用的	c=1 d=1 t=184
+wo xian zai 	我现在	c=1 d=0.66034 t=186
+wo zai 	我在	c=1 d=0.763379 t=186
+wu fan 	午饭	c=0 d=0.0970446 t=186
+wu fan ma 	午饭吗	c=1 d=0.97531 t=186
+wu liao 	无聊	c=0 d=0.0995012 t=186
+wu song 	雾凇	c=1 d=1 t=176
+wu song pin yin 	雾凇拼音	c=1 d=0.955997 t=186
+wu song pin yin shu ru fang an 	雾凇拼音输入方案	c=1 d=0.960789 t=186
+xi wang 	希望	c=1 d=0.860708 t=186
+xia zai 	下载	c=1 d=0.774916 t=186
+xian 	先	c=1 d=0.895834 t=186
+xian zai 	现在	c=3 d=2.77589 t=186
+xian zai bu zhi dao 	现在不知道	c=1 d=0.937067 t=186
+xian zai wo gai 	现在我该	c=1 d=1 t=179
+xiao he shuang pin 	小鹤双拼	c=1 d=1 t=186
+xuan xiang 	选项	c=0 d=0.164564 t=186
+xuan ze 	选择	c=0 d=0.066365 t=186
+xuan ze de shi 	选择的是	c=1 d=0.666977 t=186
+xue ruo 	削弱	c=1 d=0.960789 t=186
+ya 	呀	c=0 d=0.097531 t=186
+yan se 	颜色	c=10 d=8.22208 t=186
+yang shi 	样式	c=3 d=2.32225 t=186
+ye 	也	c=2 d=1.32449 t=186
+yi fu yuan 	一附院	c=1 d=0.847894 t=186
+yi jiu 	依旧	c=1 d=0.99005 t=186
+yi xia 	一下	c=0 d=0.0722527 t=186
+yi xia 	以下	c=1 d=0.729789 t=186
+yi xia xuan xiang 	一下选项	c=1 d=0.726149 t=186
+ying yong 	应用	c=1 d=0.737123 t=186
+yong de 	用的	c=1 d=1.01244 t=186
+you 	有	c=2 d=1.5131 t=186
+you 	由	c=1 d=0.923116 t=186
+you mei you 	有没有	c=1 d=0.955997 t=186
+you nuan qi 	有暖气	c=1 d=0.99005 t=186
+you shen me 	有什么	c=1 d=0.937067 t=186
+yu heng 	宇恒	c=0 d=0.0965605 t=186
+yuan su 	元素	c=1 d=0.752014 t=186
+yun kong jian 	云空间	c=1 d=0.856415 t=186
+zai 	在	c=1 d=0.776061 t=186
+zai gan sha 	在干啥	c=1 d=0.995012 t=186
+zhao wo wan 	找我玩	c=1 d=0.985112 t=186
+zhe ge 	这个	c=4 d=3.51451 t=186
+zhe ge li mian 	这个里面	c=1 d=0.806541 t=186
+zhe li 	这里	c=1 d=0.965605 t=186
+zhe me 	这么	c=0 d=0.0937067 t=186
+zhe me ping zheng 	这么平整	c=1 d=0.941765 t=186
+zhe shi 	这是	c=1 d=0.946485 t=186
+zhe yang 	这样	c=1 d=1 t=183
+zhen shi 	真是	c=1 d=0.980199 t=186
+zhu ti 	主题	c=1 d=0.715338 t=186
+zhuang shi 	装饰	c=0 d=0.0744532 t=186
+zi ji 	自己	c=1 d=0.831104 t=186
+zi se 	紫色	c=3 d=2.4567 t=186
+zuo bu zuo 	做不做	c=1 d=0.839457 t=186
+zuo shen me 	做什么	c=1 d=1 t=180

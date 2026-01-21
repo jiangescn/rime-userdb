@@ -1,0 +1,13 @@
+# RIME build cache
+build/
+
+# binary db
+*.bin
+
+# device-specific
+installation.yaml
+user.yaml
+default.custom.yaml
+
+# backups
+*.bak
