@@ -1,13 +1,18 @@
 # RIME build cache
 build/
 
-# binary db
+# Compiled user databases
+*.userdb/
+*.userdb
 *.bin
 
-# device-specific
-installation.yaml
-user.yaml
-default.custom.yaml
+# Sync runtime temp
+sync/*/*.userdb
 
-# backups
-*.bak
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
