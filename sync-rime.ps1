@@ -2,6 +2,8 @@
 param(
     [string]$RimeDir = (Join-Path $env:APPDATA "Rime"),
     [string]$DeployerPath,
+    [string]$CheckoutDir = (Join-Path $env:LOCALAPPDATA "rime-userdb"),
+    [string]$RepositoryUrl = "git@github.com:jiangescn/rime-userdb.git",
     [switch]$SkipPull,
     [switch]$LocalOnly
 )
@@ -23,6 +25,65 @@ $ConfigFiles = @(
     "en.ico"
 )
 $ConfigDirectories = @("cn_dicts", "en_dicts")
+
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    throw "Git was not found in PATH. Install Git for Windows first."
+}
+
+# A standalone downloaded copy of this script bootstraps a managed checkout,
+# then hands control to the repository copy so all remaining files are trusted
+# to come from the same revision.
+if (-not (Test-Path -LiteralPath (Join-Path $RepoDir ".git"))) {
+    $checkoutGitDir = Join-Path $CheckoutDir ".git"
+    if (Test-Path -LiteralPath $CheckoutDir) {
+        if (-not (Test-Path -LiteralPath $checkoutGitDir)) {
+            throw "CheckoutDir exists but is not a Git repository: $CheckoutDir"
+        }
+
+        $remoteOutput = @(& git -C $CheckoutDir remote get-url origin)
+        if ($LASTEXITCODE -ne 0) {
+            throw "Unable to read the origin remote in $CheckoutDir"
+        }
+        $actualRemote = ($remoteOutput -join "`n").Trim()
+        $normalizedActual = (($actualRemote -replace '^git@github\.com:', 'https://github.com/') -replace '\.git$', '').TrimEnd('/').ToLowerInvariant()
+        $normalizedExpected = (($RepositoryUrl -replace '^git@github\.com:', 'https://github.com/') -replace '\.git$', '').TrimEnd('/').ToLowerInvariant()
+        if ($normalizedActual -ne $normalizedExpected) {
+            throw "CheckoutDir points to a different repository: $actualRemote"
+        }
+    } else {
+        Write-Host "Cloning $RepositoryUrl to $CheckoutDir ..."
+        & git clone $RepositoryUrl $CheckoutDir
+        if ($LASTEXITCODE -ne 0) {
+            throw "Unable to clone $RepositoryUrl"
+        }
+    }
+
+    $repositoryScript = Join-Path $CheckoutDir "sync-rime.ps1"
+    if (-not (Test-Path -LiteralPath $repositoryScript)) {
+        throw "The cloned repository does not contain sync-rime.ps1."
+    }
+
+    $childArguments = @(
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", $repositoryScript,
+        "-RimeDir", $RimeDir,
+        "-CheckoutDir", $CheckoutDir,
+        "-RepositoryUrl", $RepositoryUrl
+    )
+    if ($DeployerPath) {
+        $childArguments += @("-DeployerPath", $DeployerPath)
+    }
+    if ($SkipPull) {
+        $childArguments += "-SkipPull"
+    }
+    if ($LocalOnly) {
+        $childArguments += "-LocalOnly"
+    }
+
+    & powershell.exe @childArguments
+    exit $LASTEXITCODE
+}
 
 function Invoke-Git {
     param([Parameter(Mandatory = $true)][string[]]$Arguments)
@@ -51,14 +112,6 @@ function Invoke-Deployer {
     if ($process.ExitCode -ne 0) {
         throw "WeaselDeployer.exe $Argument failed with exit code $($process.ExitCode)"
     }
-}
-
-if (-not (Test-Path -LiteralPath (Join-Path $RepoDir ".git"))) {
-    throw "Run this script from a Git clone of the rime-userdb repository."
-}
-
-if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-    throw "Git was not found in PATH. Install Git for Windows first."
 }
 
 if (-not $DeployerPath) {
