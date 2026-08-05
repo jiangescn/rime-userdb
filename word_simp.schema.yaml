@@ -1,0 +1,14 @@
+schema:
+  schema_id: word_simp
+  name: Word Simp
+  version: "0.1"
+  author:
+    - pdog <pdog@qq.com>
+  description: Word Simp
+  icon: cn.ico
+  ascii_icon: en.ico
+
+
+translator:
+  dictionary: word_simp
+  spelling_hints: 9
