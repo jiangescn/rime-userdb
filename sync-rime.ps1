@@ -5,6 +5,7 @@ param(
     [string]$CheckoutDir = (Join-Path $env:LOCALAPPDATA "rime-userdb"),
     [string]$RepositoryUrl = "git@github.com:jiangescn/rime-userdb.git",
     [switch]$SkipPull,
+    [switch]$SkipDictionaryUpdate,
     [switch]$LocalOnly
 )
 
@@ -77,6 +78,9 @@ if (-not (Test-Path -LiteralPath (Join-Path $RepoDir ".git"))) {
     if ($SkipPull) {
         $childArguments += "-SkipPull"
     }
+    if ($SkipDictionaryUpdate) {
+        $childArguments += "-SkipDictionaryUpdate"
+    }
     if ($LocalOnly) {
         $childArguments += "-LocalOnly"
     }
@@ -84,6 +88,14 @@ if (-not (Test-Path -LiteralPath (Join-Path $RepoDir ".git"))) {
     & powershell.exe @childArguments
     exit $LASTEXITCODE
 }
+
+# The same Windows session must not deploy or update Rime concurrently.
+$syncMutex = New-Object System.Threading.Mutex($false, 'Local\RimeUserDictionarySync')
+$lockAcquired = $false
+try {
+    try { $lockAcquired = $syncMutex.WaitOne(0) }
+    catch [System.Threading.AbandonedMutexException] { $lockAcquired = $true }
+    if (-not $lockAcquired) { throw 'Another Rime synchronization is already running.' }
 
 function Invoke-Git {
     param([Parameter(Mandatory = $true)][string[]]$Arguments)
@@ -173,6 +185,26 @@ if (Test-Path -LiteralPath $localSyncDir) {
     Copy-Item -LiteralPath $localSyncDir -Destination $backupDir -Recurse -Force
 }
 
+$dictionaryUpdate = [pscustomobject]@{ ChangedPaths = @(); BackupDirectory = $null }
+if (-not $SkipDictionaryUpdate -and -not $LocalOnly) {
+    # Do not mix automatic dictionary changes with pre-existing tracked edits.
+    $pendingChanges = @(& git -C $RepoDir status --porcelain --untracked-files=no)
+    if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect the dictionary checkout.' }
+    if ($pendingChanges.Count -gt 0) {
+        Write-Warning 'Official dictionary update skipped because the checkout has tracked local changes.'
+    } else {
+        try {
+            $dictionaryUpdate = & (Join-Path $RepoDir 'update-rime-dicts.ps1') -RepoDir $RepoDir -BackupRoot $backupRoot
+        } catch {
+            if ($_.Exception.Data['RollbackFailed']) { throw }
+            Write-Warning "Official dictionary update skipped; keeping existing dictionaries. $($_.Exception.Message)"
+        }
+    }
+} else {
+    Write-Host 'Official dictionary update skipped (-SkipDictionaryUpdate or -LocalOnly).'
+}
+
+try {
 foreach ($relativePath in $ConfigFiles) {
     $source = Join-Path $RepoDir $relativePath
     if (-not (Test-Path -LiteralPath $source)) {
@@ -204,6 +236,22 @@ if (Test-Path -LiteralPath $repoSyncDir) {
 Invoke-Deployer -Argument "/deploy"
 Invoke-Deployer -Argument "/sync"
 Invoke-Deployer -Argument "/deploy"
+} catch {
+    $deploymentError = $_
+    if ($dictionaryUpdate.ChangedPaths.Count -gt 0) {
+        Write-Warning 'Deployment failed. Restoring the previous official dictionaries.'
+        foreach ($relativePath in $dictionaryUpdate.ChangedPaths) {
+            Copy-Item -LiteralPath (Join-Path $dictionaryUpdate.BackupDirectory $relativePath) -Destination (Join-Path $RepoDir $relativePath) -Force
+            if ($relativePath -match '^(cn_dicts|en_dicts)/') {
+                $previousLiveFile = Join-Path $backupDir $relativePath
+                Copy-Item -LiteralPath $previousLiveFile -Destination (Join-Path $RimeDir $relativePath) -Force
+            }
+        }
+        try { Invoke-Deployer -Argument '/deploy' }
+        catch { Write-Warning "Restored source dictionaries, but redeployment still failed. Backup: $backupDir" }
+    }
+    throw $deploymentError
+}
 
 $installationFile = Join-Path $RimeDir "installation.yaml"
 if (-not (Test-Path -LiteralPath $installationFile)) {
@@ -231,12 +279,14 @@ $repoSnapshot = Join-Path $repoDeviceDir "rime_ice.userdb.txt"
 Copy-Item -LiteralPath $localSnapshot -Destination $repoSnapshot -Force
 
 $gitSnapshot = "sync/$installationId/rime_ice.userdb.txt"
-Invoke-Git -Arguments @("add", "--", $gitSnapshot)
-& git -C $RepoDir diff --cached --quiet --exit-code
+$commitPaths = @($gitSnapshot) + @($dictionaryUpdate.ChangedPaths)
+Invoke-Git -Arguments (@("add", "--") + $commitPaths)
+& git -C $RepoDir diff --cached --quiet --exit-code -- @commitPaths
 $diffExitCode = $LASTEXITCODE
 if ($diffExitCode -eq 1) {
     $commitMessage = "sync Rime user dictionary from $env:COMPUTERNAME"
-    Invoke-Git -Arguments @("commit", "-m", $commitMessage)
+    # Only include files owned by this synchronization, never unrelated staged work.
+    Invoke-Git -Arguments (@("commit", "-m", $commitMessage, "--") + $commitPaths)
     Invoke-Git -Arguments @("push", "origin", "main")
 } elseif ($diffExitCode -ne 0) {
     throw "Unable to inspect staged Git changes."
@@ -247,3 +297,7 @@ if ($diffExitCode -eq 1) {
 Write-Host "Rime and GitHub synchronization completed."
 Write-Host "Device ID: $installationId"
 Write-Host "Backup: $backupDir"
+} finally {
+    if ($lockAcquired) { $syncMutex.ReleaseMutex() }
+    $syncMutex.Dispose()
+}

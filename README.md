@@ -4,7 +4,7 @@
 
 以后忘记操作时，只需要看下面的“日常同步”或“新电脑首次使用”即可。
 
-当前雾凇基础词库来自正式版 `2026.06.30`。具体上游提交和升级范围见 [`RIME_ICE_VERSION.md`](./RIME_ICE_VERSION.md)。
+每次正常运行同步脚本，会检查雾凇官方默认分支并增量更新现有基础词典。当前安装的上游提交见 [`RIME_ICE_VERSION.md`](./RIME_ICE_VERSION.md)，文件哈希记录在 `rime-ice-update.json`。
 
 ## 最常用的操作
 
@@ -27,11 +27,28 @@ Rime and GitHub synchronization completed.
 1. 从 GitHub 拉取其他电脑上传的最新词库；
 2. 导出本机刚刚学习到的词频；
 3. 备份本机现有配置；
-4. 把仓库配置和所有电脑的词频合并到 `%APPDATA%\Rime`；
+4. 检查雾凇官方词库，下载固定提交、校验并备份后更新，再把仓库配置和所有电脑的词频合并到 `%APPDATA%\Rime`；
 5. 重新部署小狼毫；
-6. 将本机合并后的词频提交并推送回 GitHub。
+6. 将本机合并后的词频和本次官方词库更新提交并推送回 GitHub。
 
 建议在换电脑前、另一台电脑开始工作前，以及积累了一批新词后各运行一次。不要在两台电脑上同时运行，避免 Git 推送冲突。
+
+### 官方词库自动更新
+
+无需新命令：正常同步时自动查询 `iDvel/rime-ice` 的默认分支，锁定一个提交后下载。不会创建定时任务，也不会在日常打字时联网。
+
+- 只更新 `rime-ice-update.json` 记录的 16 个现有中文、英文词典文件。
+- 保留 `rime_ice.dict.yaml` 中的词典挂载列表、小鹤双拼、自定义配置、schema、Lua、`word_simp` 和个人词频。上游新增或改名的文件需人工检查后接入。
+- 文件哈希与上次记录不符时，保留手工修改并跳过官方更新。
+- 官方查询、下载或格式校验失败时，显示警告并使用现有词库继续同步。你自己的 GitHub 仓库拉取失败仍会停止原同步流程。
+- 更新前备份到 `%LOCALAPPDATA%\RimeBackups\official-时间-随机编号`；部署失败时恢复本次替换的词典，并尝试重新部署旧版。正常同步的本机备份仍保留在同目录的时间戳子目录中。
+- 官方默认分支有新提交但词典内容没变时，仅更新版本记录，避免重复下载该提交。
+
+临时只同步配置和个人词频、跳过官方更新：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\rime-userdb\sync-rime.ps1" -SkipDictionaryUpdate
+```
 
 ## 新电脑首次使用
 
@@ -150,7 +167,7 @@ explorer "$env:LOCALAPPDATA\RimeBackups"
 powershell -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\rime-userdb\sync-rime.ps1" -LocalOnly
 ```
 
-`-LocalOnly` 仍会安装配置、合并词频和重新部署，但不会提交或推送本机快照。
+`-LocalOnly` 仍会安装已有配置、合并词频和重新部署，但不会提交或推送本机快照，也不会检查或更新官方词库。
 
 仅在调试时跳过 `git pull`：
 
@@ -158,7 +175,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\rime-user
 powershell -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\rime-userdb\sync-rime.ps1" -SkipPull -LocalOnly
 ```
 
-日常使用不要加 `-SkipPull`，否则可能漏掉其他电脑的新词频。
+日常使用不要加 `-SkipPull`，否则可能漏掉其他电脑的新词频。`-SkipPull` 本身不关闭官方词库检查；只需关闭官方检查时使用 `-SkipDictionaryUpdate`。
 
 ## 如何确认同步成功
 
