@@ -257,8 +257,16 @@ class NativeTools:
         self.user, self.repo, self.platform = user, repo, platform
         self.squirrel = pathlib.Path('/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel')
         support = pathlib.Path(shared_support) if shared_support else pathlib.Path('/Library/Input Methods/Squirrel.app/Contents/SharedSupport')
-        self.manager = str(support / 'rime_dict_manager') if platform == 'macos' else shutil.which('rime_dict_manager')
-        self.deployer = str(support / 'rime_deployer') if platform == 'macos' else shutil.which('rime_deployer')
+        # Squirrel distributions place native tools either in SharedSupport or
+        # its sibling MacOS directory. Keep --shared-support working for both.
+        def mac_tool(name):
+            for directory in (support, support.parent / 'MacOS'):
+                candidate = directory / name
+                if candidate.is_file():
+                    return str(candidate)
+            return str(support / name)
+        self.manager = mac_tool('rime_dict_manager') if platform == 'macos' else shutil.which('rime_dict_manager')
+        self.deployer = mac_tool('rime_deployer') if platform == 'macos' else shutil.which('rime_deployer')
         for path in (self.manager, self.deployer):
             if not path or not pathlib.Path(path).is_file():
                 raise RuntimeError('Install Rime with Lua support and native rime_dict_manager/rime_deployer tools first.')

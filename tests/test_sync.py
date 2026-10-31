@@ -130,6 +130,28 @@ class RuntimeCompletenessTests(unittest.TestCase):
             inspect(source)
 
 
+class MacNativeToolTests(unittest.TestCase):
+    def test_shared_support_and_macos_tool_locations(self):
+        for location in ('SharedSupport', 'MacOS'):
+            with self.subTest(location=location), tempfile.TemporaryDirectory() as temporary:
+                contents = pathlib.Path(temporary)
+                support = contents / 'SharedSupport'
+                support.mkdir()
+                tools = contents / location
+                tools.mkdir(exist_ok=True)
+                for name in ('rime_deployer', 'rime_dict_manager'):
+                    (tools / name).write_text('native tool fixture')
+                native = module.NativeTools(contents / 'user', contents / 'repo', 'macos', support)
+                self.assertEqual(pathlib.Path(native.manager), tools / 'rime_dict_manager')
+                self.assertEqual(pathlib.Path(native.deployer), tools / 'rime_deployer')
+
+    def test_missing_mac_tools_stop_before_migration(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(RuntimeError, 'native rime_dict_manager'):
+                module.NativeTools(pathlib.Path(temporary) / 'user', pathlib.Path(temporary) / 'repo',
+                                   'macos', pathlib.Path(temporary) / 'SharedSupport')
+
+
 class DictionaryUpdateTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='rime-update-test-', dir=ROOT.parent)

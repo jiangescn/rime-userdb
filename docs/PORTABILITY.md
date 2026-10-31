@@ -42,7 +42,7 @@ bash "$HOME/Library/Application Support/rime-userdb/sync-rime.sh"
 
 也可从仓库其他检出位置运行其 `sync-rime.sh`。独立下载该脚本后运行，会克隆默认检出目录。保持 Git 检出与 Rime 用户目录分开。
 
-入口会短暂退出鼠须管，使用鼠须管自带命令行工具进行同步与构建，结束后重新启动。默认工具目录为 `/Library/Input Methods/Squirrel.app/Contents/SharedSupport`，非标准安装可传 `--shared-support`。原生工具负责词频合并，不用文本拼接或简单求和代替 Rime 合并算法。
+入口会短暂退出鼠须管，使用鼠须管自带命令行工具进行同步与构建，结束后重新启动。工具会从 `/Library/Input Methods/Squirrel.app/Contents/SharedSupport` 及相邻的 `MacOS` 目录中查找；非标准工具位置可传 `--shared-support`。原生工具负责词频合并，不用文本拼接或简单求和代替 Rime 合并算法。
 
 ## Linux 与其他系统
 
