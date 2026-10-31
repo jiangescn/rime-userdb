@@ -1,0 +1,306 @@
+{
+  "baseline": "Windows Weasel 0.17.4 / librime 1.13.1; repository defaults at 15ee876",
+  "captured_files": {
+    "default.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "0DACFBACA4774C07A0ADB2CA2380DC290ADA5DFB97E027D54063790EBACA37CD"
+    },
+    "double_pinyin_flypy.schema.yaml": {
+      "origin": "Windows user directory",
+      "sha256": "B171A15DDCA51F194AE847887F422AE5EA0943436E1107D707786473A301BF64"
+    },
+    "melt_eng.schema.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "13B7BA3E45055B3D39A69C77C5DF9F841FB655A589626B9AFFDE5C3971E9162D"
+    },
+    "melt_eng.dict.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "E23BD4EA294D5E04E7B50FBD160FB253E489F44F28C2B8911AF276D96DB04973"
+    },
+    "radical_pinyin.schema.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "4F080D704DBC092B848DC7A260006FF8C8319B56554643DB7C886163F1398998"
+    },
+    "radical_pinyin.dict.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "AC0D8D0A72FE1C44FC8539C9C0F2FC5333D55A0BE9514C0196F471CADD7B37BC"
+    },
+    "symbols_v.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "B282BC995163987DED73481F8FB38AB2EC20852A3F0CEBE12FE7FD589655E314"
+    },
+    "symbols_caps_v.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "D3E51B78537F7191F5A07635345388C04F529C0E732F5B1CEB594DF58A5C97E3"
+    },
+    "symbols.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "F12EE3A61BB9739C29FE6BA12890C5C9C50CA38F63CE9C85E1A16E223AE0B04F"
+    },
+    "key_bindings.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "5C484257CCCBAB899BC874DFEB9257CE7190C99FEE3ABC33321767C8DAC56AF9"
+    },
+    "punctuation.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "D6F89592149098F0A2D0ED3E5C83F49ADB6226CDF1D967B0BC0D293F4E5C496A"
+    },
+    "essay.txt": {
+      "origin": "Windows shared data",
+      "sha256": "24A536267EFC0B6C732D647415F13FE72AE8DD6B862410B734D2DFC41FF9BA21"
+    },
+    "weasel.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "DBB76467F7C23AB41DFE795680DC53528D832CFA0B0ED9F4AC638FAD3FB55697"
+    },
+    "squirrel.yaml": {
+      "origin": "Windows shared data",
+      "sha256": "86FB1D00D0FCCD74FCF150807FC9939983B51421CAC7D55E9399B6D714DA68AB"
+    },
+    "lua/autocap_filter.lua": {
+      "origin": "Windows shared data",
+      "sha256": "8B1CB8D836D0E544CC63278F31AB0C6E32A877083972535AA88049B4A6B37663"
+    },
+    "lua/calc_translator.lua": {
+      "origin": "Windows shared data",
+      "sha256": "590AAB2DE4527E9C0832F872D676B8951871104B29B95F258392269CC9E1E4EE"
+    },
+    "lua/cn_en_spacer.lua": {
+      "origin": "Windows shared data",
+      "sha256": "1162630CE051F9A79F71E80B0BD601EE4366502B2F3577AE8140A822AE14A06E"
+    },
+    "lua/corrector.lua": {
+      "origin": "Windows shared data",
+      "sha256": "C9BF1653B8E93825171D2E582A099EF740D6BBD420C7BDCAFB7A6707D5F6B963"
+    },
+    "lua/date_translator.lua": {
+      "origin": "Windows shared data",
+      "sha256": "E618D7FF9EF4CB1262B44E31904DCD3BC712884E4F6E5DAAC5D38114E6351884"
+    },
+    "lua/debuger.lua": {
+      "origin": "Windows shared data",
+      "sha256": "833AF467F40A6C84332788AE0E8AB18B761DA5D81972B6F35492F5EC6CE15A65"
+    },
+    "lua/en_spacer.lua": {
+      "origin": "Windows shared data",
+      "sha256": "586FCA335B9C8C9F58463BBCC8097C8645C9DDE297D69696594BEB3020E0063A"
+    },
+    "lua/force_gc.lua": {
+      "origin": "Windows shared data",
+      "sha256": "BDFFDF8342EB2167343DE3A3CC5529CCFDDE13AFC0EA0DAC3F917419EBA0F382"
+    },
+    "lua/is_in_user_dict.lua": {
+      "origin": "Windows shared data",
+      "sha256": "78C0C16DAA3FDFBA6DE0D358487E4377277D2245F536807C363610D8A954C7F7"
+    },
+    "lua/long_word_filter.lua": {
+      "origin": "Windows shared data",
+      "sha256": "F024CEC6FE1A0E3396EAC7450DC41F8E6DF13C6735BA64615778E3416DCFCD81"
+    },
+    "lua/lunar.lua": {
+      "origin": "Windows shared data",
+      "sha256": "2514261D603945212540D112AD1A3CAAC78BEEF59126244CFA6534F594C44DC9"
+    },
+    "lua/number_translator.lua": {
+      "origin": "Windows shared data",
+      "sha256": "699A74D1602AF3DBE8E580A00F6AABF939FAF98912C7EF8D177B53DB11AD9082"
+    },
+    "lua/pin_cand_filter.lua": {
+      "origin": "Windows shared data",
+      "sha256": "12A5262802374CC2FA1E0B30A94DD12DF7A3172175A89B399DA05F3868D19ED6"
+    },
+    "lua/reduce_english_filter.lua": {
+      "origin": "Windows shared data",
+      "sha256": "CF7FC268192C70FB1411942C067773E0CABCDE6A9C2282A252BAA148253970F3"
+    },
+    "lua/search.lua": {
+      "origin": "Windows shared data",
+      "sha256": "E35E4AA1BB051C953A5B98D9B63C40E3BAE3EE98DEB58DD15D296FEF63DA51B9"
+    },
+    "lua/select_character.lua": {
+      "origin": "Windows shared data",
+      "sha256": "B19C9FE3496E620F4A353589924787B342A60211969F035EE76BF6515C5649F2"
+    },
+    "lua/t9_preedit.lua": {
+      "origin": "Windows shared data",
+      "sha256": "9B69B73950CE23FB2E225263BCF19792CF2FAA28A42162FCB6C2C11416123A53"
+    },
+    "lua/unicode.lua": {
+      "origin": "Windows shared data",
+      "sha256": "D5AB0CFE8A168054CCB4C83D72B4B111A70FE5F93D58F69F9079B9AB010EE0D7"
+    },
+    "lua/uuid.lua": {
+      "origin": "Windows shared data",
+      "sha256": "85A950BC871096F4F70BC1F935540F01944536A7E818D30C5EB3D0A71A7900E2"
+    },
+    "lua/v_filter.lua": {
+      "origin": "Windows shared data",
+      "sha256": "3D1F9A1CDA532E0C0EAB9B774D727AB37C2A9E468E1219407C5C8FADB964B2E5"
+    },
+    "lua/cold_word_drop/drop_words.lua": {
+      "origin": "Windows shared data",
+      "sha256": "C54CC787CF23A28321B42E256A094C4AADBF27A836F9852EA7B8A48E433EE591"
+    },
+    "lua/cold_word_drop/filter.lua": {
+      "origin": "Windows shared data",
+      "sha256": "CB862D048C0B670A22B329992EFE436D5E9107BF24D83F6D5F00213139AD5E82"
+    },
+    "lua/cold_word_drop/hide_words.lua": {
+      "origin": "Windows shared data",
+      "sha256": "26DF6ED82BBC646E29AA647BE35DF9076F6195E520489CCD9022DC081A02CB30"
+    },
+    "lua/cold_word_drop/logger.lua": {
+      "origin": "Windows shared data",
+      "sha256": "50873222FB3BB095ABA423B36B70CF6285958293073A7B097B292AC3AC25E8FC"
+    },
+    "lua/cold_word_drop/metatable.lua": {
+      "origin": "Windows shared data",
+      "sha256": "66D88F4D9DC0BF7C37E8F5CA9AB3C237CA995A28468C53F57CC3AA3937B798CB"
+    },
+    "lua/cold_word_drop/processor.lua": {
+      "origin": "Windows shared data",
+      "sha256": "3AF3DE687AD7FEBA4E9F49E7B2768E9137D1447BBEEDE7F81F8C10206C0747F0"
+    },
+    "lua/cold_word_drop/reduce_freq_words.lua": {
+      "origin": "Windows shared data",
+      "sha256": "2124F57446510CEAE3ED5F8383237FDCAEC68E54CFD0D66218B14F4F011872CA"
+    },
+    "lua/cold_word_drop/string.lua": {
+      "origin": "Windows shared data",
+      "sha256": "A84155B7FE1E6F3F1EED6CFA89EFA3B72536D37D37F8B47674CDC4472A44AB16"
+    },
+    "opencc/emoji.json": {
+      "origin": "Windows shared data",
+      "sha256": "79FE3B878625D8F96D70AEB6C4D1929AB2A582F8B935D309125B6CCFFD799602"
+    },
+    "opencc/emoji.txt": {
+      "origin": "Windows shared data",
+      "sha256": "0B4DEF82A77526A1D377079950FB907AFE160C64636F0A69C18EF8C327185D6C"
+    },
+    "opencc/hk2s.json": {
+      "origin": "Windows shared data",
+      "sha256": "EB651448D8B536D6131E53E254E8CA2C158C9CED50FD55EE88A76E606DD32EFA"
+    },
+    "opencc/hk2t.json": {
+      "origin": "Windows shared data",
+      "sha256": "1E5DF53815D42A9FF5A1C6333B3987C072E27A27376D33F1864DC7B302751BB1"
+    },
+    "opencc/HKVariants.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "62750CB79EEF18A407030B05BD4ABE0E102BEC2254D04B2D2310792F44519321"
+    },
+    "opencc/HKVariantsRev.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "87D4483565860DC96EA5AF26F0716864966C4600CC03D5DDE73B9487D826021A"
+    },
+    "opencc/HKVariantsRevPhrases.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "0FD9BC1F9E9250224B0737E320A850FC630F37B7C475A1DCB1081416ADE13EFA"
+    },
+    "opencc/jp2t.json": {
+      "origin": "Windows shared data",
+      "sha256": "3F9B091520BA0D55ECFE6FCA719A672BB2691B1EB9B0C0A43A4AA4326B15FD9E"
+    },
+    "opencc/JPShinjitaiCharacters.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "970D1FF54460ED4EF3C0E7DAB7CD176C917DED0AAEEF4299E77DE32D94995914"
+    },
+    "opencc/JPShinjitaiPhrases.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "E3D06B628271327797FA57528A7EEF8830F4A1F153E1C5A588F89D77831F7259"
+    },
+    "opencc/JPVariants.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "E7F9DAAA4BEE07CBC70A3E186BDB42F2F4FB300DF895A1CFD472C4FDE0D52831"
+    },
+    "opencc/JPVariantsRev.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "9F4FCDD369741AE7421D7E6D906681E133389BE88EE146E214EE24C27AB8BAB2"
+    },
+    "opencc/others.txt": {
+      "origin": "Windows shared data",
+      "sha256": "2AF2509A1B4DE4B737DA0F264238CA5E772504619CDFD0EC0AFC0926B8111E68"
+    },
+    "opencc/s2hk.json": {
+      "origin": "Windows shared data",
+      "sha256": "3708E756EA01783E9CF6B3CCE527580810B3D539B8C7FCC3594DD1517AA05BFF"
+    },
+    "opencc/s2t.json": {
+      "origin": "Windows shared data",
+      "sha256": "710BB970E406D9C0A3DD33C609248686CF1C5578D064B7B7FC89E70FBB9EA75D"
+    },
+    "opencc/s2tw.json": {
+      "origin": "Windows shared data",
+      "sha256": "67CE1F5AA3D6B21EBB523084B40E66F80BEC27BB2DC6B540D44DAC2E27F7194E"
+    },
+    "opencc/s2twp.json": {
+      "origin": "Windows shared data",
+      "sha256": "72D187574510542BE608C862D5359D29480EE61F137082DF8A06D74F7BCFC79C"
+    },
+    "opencc/STCharacters.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "4C7398B4CEEDF9B58B5EA77CDD911BC7807C50C7491111DC9B4073C68AD5A2BB"
+    },
+    "opencc/STPhrases.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "5E8D8289BEACC7D4AB7BAA7193EBB589F3D5A956449ED9C81CCFF431AE503F6E"
+    },
+    "opencc/t2hk.json": {
+      "origin": "Windows shared data",
+      "sha256": "A8531BEB7430FE1AFED0294A893AF529C7B7FD2AD41567B5DACCB8399C8EF2F0"
+    },
+    "opencc/t2jp.json": {
+      "origin": "Windows shared data",
+      "sha256": "4FB22429D63173715FEC30524111EC141C0577B66C9F090513EA8BAC4741AD77"
+    },
+    "opencc/t2s.json": {
+      "origin": "Windows shared data",
+      "sha256": "B818534194F27C2D95F01001EDB0A5EC49B9050119892CB30A0504BB202CC07C"
+    },
+    "opencc/t2tw.json": {
+      "origin": "Windows shared data",
+      "sha256": "11495BF144CD932A9568810822A5AF0FBBA2DB9C2E06A2BB2871583423FAC24A"
+    },
+    "opencc/TSCharacters.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "85291E0173E972BBCA58C848FB90B3BB41C79674CB61A75645E01BD884AD5927"
+    },
+    "opencc/TSPhrases.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "EDAFC46F5C3ECA61A754C78E47117E7C73995CACD6C99AADCB8A219D7AE3E53D"
+    },
+    "opencc/tw2s.json": {
+      "origin": "Windows shared data",
+      "sha256": "FD3E758691A87C9246D081612021C7F9186CE7ABE845CD4EFF3E7326C300434D"
+    },
+    "opencc/tw2sp.json": {
+      "origin": "Windows shared data",
+      "sha256": "D107837817E7704CEC83A9FF7B876C289EB0AE752722C790C9BF967509C9EAA6"
+    },
+    "opencc/tw2t.json": {
+      "origin": "Windows shared data",
+      "sha256": "046FBDF089388D11D51E5AC415E82564FF71B6E9ADD008CCE7488E845D798C57"
+    },
+    "opencc/TWPhrases.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "14CE3A5BEDED4E387F571FF6AA0473D631C02B6E9AF019960C87E1CD278640C5"
+    },
+    "opencc/TWPhrasesRev.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "5F8526ECC80A352A876FB8A6750111BD78465355B606B502FB018A57BA7E102C"
+    },
+    "opencc/TWVariants.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "390F07A1867AD56AA60A7AF23B6E4B3ACC96EA48D893C06EDE3DFFB1C576C2BC"
+    },
+    "opencc/TWVariantsRev.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "663471398C79400DB4485DF5E92B709AC174C5E393F4FE0E3D5B02034024D609"
+    },
+    "opencc/TWVariantsRevPhrases.ocd2": {
+      "origin": "Windows shared data",
+      "sha256": "EA51DDE3E45FDAF9349473AE19B3567FE5DA59B01AEFF2F4E9EAE50C9BAF2C24"
+    }
+  },
+  "policy": "Input schemas and Lua are pinned; only the existing dictionary updater updates its 16 allowlisted dictionaries."
+}

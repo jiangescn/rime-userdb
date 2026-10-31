@@ -1,6 +1,8 @@
 # Rime 词库同步使用手册
 
-这份仓库用于在多台 Windows 电脑之间同步小狼毫（Weasel）的配置、静态词典和个人输入词频。
+这份仓库用于在多台电脑之间同步个人 Rime 配置、静态词典和输入词频，并支持在全新环境迁移整套方案。Windows 保留原同步入口，macOS/Linux 使用新增入口；外观按设备分别备份，新设备采用仓库当前默认选项。
+
+跨系统使用、同步边界与验证范围见 [迁移说明](docs/PORTABILITY.md)。
 
 以后忘记操作时，只需要看下面的“日常同步”或“新电脑首次使用”即可。
 
@@ -128,6 +130,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File $script
 - `rime_ice.schema.yaml`、`word_simp.schema.yaml`：输入方案；
 - `default.custom.yaml`、`double_pinyin_flypy.custom.yaml`、`weasel.custom.yaml`：方案和外观配置；
 - `rime.lua`：日期、时间等 Lua 功能；
+- `rime-files.json`：完整安装清单，包括双拼基础方案、英文/反查依赖、Lua、标点和 OpenCC；
+- `devices/<设备 ID>/appearance/`：各电脑独立的前端外观备份；
 - `sync/<设备 ID>/rime_ice.userdb.txt`：各电脑导出的个人输入词频。
 
 以下内容不会提交到 GitHub：
@@ -286,8 +290,8 @@ git -C "$env:LOCALAPPDATA\rime-userdb" status
 
 在文件的 `...` 后添加 `文字<TAB>编码`，TAB 必须为真实制表符，编码为 1–4 位小写字母（也支持分号和单引号）。同码词按码表顺序排列。修改后运行日常同步命令，会保存本机个人词条、合并远端、部署并上传；请按电脑先后同步，不同时编辑同一词条。
 
-脚本使用用户目录 `.xhup-personal-sync.json` 记录上次成功安装的基线。若仓库和本机同一文件都发生不同修改，或缺少基线且两份内容不同，会停止并保留两份文件；先人工合并，再将合并结果放到两处后重新同步。Git 拉取发生词条冲突时也应合并保留双方内容，不强制覆盖。
+脚本使用用户目录 `.rime-sync-state.json` 记录公共文件和本机外观上次成功安装的基线，兼容保留 `.xhup-personal-sync.json`。若仓库和本机同一文件都发生不同修改，或缺少基线且两份内容不同，会停止并保留两份文件；先人工合并，再将合并结果放到两处后重新同步。Git 拉取发生词条冲突时也应合并保留双方内容，不强制覆盖。
 
-`-LocalOnly` 会保存本机词条到本地仓库、安装和部署，但不提交或推送；存在个人词条改动时会跳过拉取。新增基线前，请勿删除 `.xhup-personal-sync.json`。
+`-LocalOnly` 会保存本机词条到本地仓库、安装和部署，但不提交或推送；存在个人词条改动时会跳过拉取。请勿删除 `.rime-sync-state.json`；缺少基线且两份已有配置不同会停止并保留两份文件。
 
 回滚配置时，在退出小狼毫后恢复安装前的 `default.custom.yaml` 和同步脚本，并按新增文件清单移出音形文件；保留原有 `rime_ice.userdb` 以及最新词频快照。完整冷备份包含用户目录、同步仓库、安装目录、注册表目录设置及 SHA-256 清单。不要用其他电脑的 `installation.yaml` 覆盖本机。

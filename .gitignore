@@ -16,3 +16,7 @@ sync/*/*.userdb
 .DS_Store
 Thumbs.db
 
+
+# Python adapter caches
+__pycache__/
+*.pyc

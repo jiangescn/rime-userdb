@@ -7,6 +7,8 @@ patch:
     - table_translator@word_simp
   schema/dependencies:
     - word_simp
+    - melt_eng
+    - radical_pinyin
   word_simp:
     dictionary: word_simp
     enable_sentence: false

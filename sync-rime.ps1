@@ -13,31 +13,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $RepoDir = $PSScriptRoot
-$ConfigFiles = @(
-    "default.custom.yaml",
-    "double_pinyin_flypy.custom.yaml",
-    "weasel.custom.yaml",
-    "rime.lua",
-    "rime_ice.dict.yaml",
-    "rime_ice.schema.yaml",
-    "word_simp.dict.yaml",
-    "word_simp.schema.yaml",
-    "cn.ico",
-    "en.ico",
-    "xhup.schema.yaml",
-    "xhup.dict.yaml",
-    "xhup_reverse.schema.yaml",
-    "xhup_reverse.dict.yaml",
-    "xhup.custom.yaml",
-    "lua/xhup/common.lua",
-    "lua/xhup/date_translator.lua",
-    "lua/xhup/time_translator.lua",
-    "lua/xhup/shortcut_processor.lua",
-    "lua/xhup/shortcut_translator.lua",
-    "opencc/short_hints.json",
-    "opencc/short_hints.txt"
-)
-$ConfigDirectories = @("cn_dicts", "en_dicts", "xhup_dicts")
+$ConfigFiles = @()
+$ConfigDirectories = @()
 
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     throw "Git was not found in PATH. Install Git for Windows first."
@@ -163,9 +140,12 @@ if (-not $DeployerPath -or -not (Test-Path -LiteralPath $DeployerPath)) {
 New-Item -ItemType Directory -Path $RimeDir -Force | Out-Null
 
 . (Join-Path $RepoDir 'sync-xhup.ps1')
-$xhupPersonalChanges = @(Save-XhupPersonalEntries -RepoDir $RepoDir -RimeDir $RimeDir)
+. (Join-Path $RepoDir 'sync-files.ps1')
+Initialize-RimeFileSync -RepoDir $RepoDir -RimeDir $RimeDir
+$ConfigFiles = @($RimeCommonFiles) + @($RimePlatformFiles)
+$localConfigChanges = @(Save-RimeLocalChanges -RepoDir $RepoDir -RimeDir $RimeDir)
 if (-not $SkipPull) {
-    Invoke-XhupRepositoryPull -RepoDir $RepoDir -LocalOnly:$LocalOnly
+    Invoke-RimeRepositoryPull -RepoDir $RepoDir -LocalOnly:$LocalOnly
 }
 
 # Export the current database before importing snapshots from other devices.
@@ -215,6 +195,7 @@ if (-not $SkipDictionaryUpdate -and -not $LocalOnly) {
 
 try {
 foreach ($relativePath in $ConfigFiles) {
+    if ($relativePath -in $RimeAppearanceFiles) { continue }
     $source = Join-Path $RepoDir $relativePath
     if (-not (Test-Path -LiteralPath $source)) {
         throw "Required repository file is missing: $relativePath"
@@ -231,6 +212,8 @@ foreach ($relativePath in $ConfigDirectories) {
     Copy-Item -LiteralPath $source -Destination $RimeDir -Recurse -Force
 }
 
+Install-RimeDeviceAppearance -RepoDir $RepoDir -RimeDir $RimeDir
+
 New-Item -ItemType Directory -Path $localSyncDir -Force | Out-Null
 $repoSyncDir = Join-Path $RepoDir "sync"
 if (Test-Path -LiteralPath $repoSyncDir) {
@@ -245,6 +228,10 @@ if (Test-Path -LiteralPath $repoSyncDir) {
 }
 
 Invoke-Deployer -Argument "/deploy"
+if (-not (Test-Path -LiteralPath (Join-Path $RimeDir 'rime_ice.userdb'))) {
+    if (-not ('RimeDictionaryBootstrap' -as [type])) { Add-Type -Path (Join-Path $RepoDir 'rime-bootstrap.cs') }
+    [RimeDictionaryBootstrap]::Create((Join-Path (Split-Path -Parent $DeployerPath) 'rime.dll'), $RimeDir, $RepoDir)
+}
 Invoke-Deployer -Argument "/sync"
 Invoke-Deployer -Argument "/deploy"
 } catch {
@@ -261,9 +248,19 @@ Invoke-Deployer -Argument "/deploy"
         try { Invoke-Deployer -Argument '/deploy' }
         catch { Write-Warning "Restored source dictionaries, but redeployment still failed. Backup: $backupDir" }
     }
+    # Restore existing managed configuration without replacing learned databases.
+    foreach ($relativePath in $ConfigFiles) {
+        $previousFile = Join-Path $backupDir $relativePath
+        if (Test-Path -LiteralPath $previousFile) {
+            Copy-Item -LiteralPath $previousFile -Destination (Join-Path $RimeDir $relativePath) -Force
+        }
+    }
+    try { Invoke-Deployer -Argument '/deploy' }
+    catch { Write-Warning "Configuration source restored; redeployment failed. Backup: $backupDir" }
     throw $deploymentError
 }
 
+Write-RimeSyncState -RimeDir $RimeDir
 Write-XhupPersonalBaseline -RimeDir $RimeDir
 
 $installationFile = Join-Path $RimeDir "installation.yaml"
@@ -292,7 +289,7 @@ $repoSnapshot = Join-Path $repoDeviceDir "rime_ice.userdb.txt"
 Copy-Item -LiteralPath $localSnapshot -Destination $repoSnapshot -Force
 
 $gitSnapshot = "sync/$installationId/rime_ice.userdb.txt"
-$commitPaths = @($gitSnapshot) + @($dictionaryUpdate.ChangedPaths) + @($XhupPersonalFiles)
+$commitPaths = @($gitSnapshot) + @($dictionaryUpdate.ChangedPaths) + @(Get-RimeManagedCommitPaths)
 Invoke-Git -Arguments (@("add", "--") + $commitPaths)
 & git -C $RepoDir diff --cached --quiet --exit-code -- @commitPaths
 $diffExitCode = $LASTEXITCODE
@@ -304,7 +301,7 @@ if ($diffExitCode -eq 1) {
 } elseif ($diffExitCode -ne 0) {
     throw "Unable to inspect staged Git changes."
 } else {
-    if ($XhupPersonalCommitCreated) {
+    if ($RimeConfigCommitCreated) {
         Invoke-Git -Arguments @("push", "origin", "main")
     }
     Write-Host "The GitHub snapshot is already up to date."
