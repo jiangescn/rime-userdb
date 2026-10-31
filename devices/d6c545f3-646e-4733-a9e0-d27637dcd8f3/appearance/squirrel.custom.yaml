@@ -1,0 +1,22 @@
+# Adapted from this repository's Weasel theme for Squirrel 1.x.
+patch:
+  style/color_scheme: soak
+  style/color_scheme_dark: soak
+  style/candidate_list_layout: linear
+  style/text_orientation: horizontal
+  style/inline_preedit: true
+  preset_color_schemes/soak:
+    name: 幽能
+    author: jianges
+    text_color: 0xc2c2c2
+    back_color: 0x2c2c2c
+    border_color: 0x444444
+    label_color: 0xb5b5b5
+    hilited_text_color: 0xeeeeee
+    hilited_back_color: 0x444444
+    candidate_text_color: 0xeeeeee
+    comment_text_color: 0x808080
+    hilited_candidate_text_color: 0xfafafa
+    hilited_comment_text_color: 0x888888
+    hilited_candidate_back_color: 0x3a3a3a
+    hilited_candidate_label_color: 0xeee6a6
