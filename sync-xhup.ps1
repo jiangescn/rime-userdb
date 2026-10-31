@@ -88,10 +88,11 @@ function Invoke-XhupRepositoryPull([string]$RepoDir, [switch]$LocalOnly) {
             Write-Host 'Personal Xiaohe edits saved locally; pull skipped in LocalOnly mode.'
             return
         }
-        # Commit only these personal files so rebase can merge other devices' edits.
+        # Commit only these personal files before merging other devices' edits.
         Invoke-Git -Arguments (@('add', '--') + $dirty)
         Invoke-Git -Arguments (@('commit', '-m', 'sync Xiaohe personal dictionaries', '--') + $dirty)
         $script:XhupPersonalCommitCreated = $true
     }
-    Invoke-Git -Arguments @('pull', '--rebase', 'origin', 'main')
+    # Preserve existing local commits and prior conflict resolutions.
+    Invoke-Git -Arguments @('pull', '--no-rebase', '--no-edit', 'origin', 'main')
 }
