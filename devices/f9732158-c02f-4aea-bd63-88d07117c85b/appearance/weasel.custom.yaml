@@ -1,0 +1,22 @@
+patch:
+  style/horizontal: true
+  style/inline_preedit: true
+  style/display_tray_icon: true
+  style/color_scheme: soak
+  preset_color_schemes:
+    soak:
+      name: 幽能
+      author: jianges
+      text_color: 12763842
+      back_color: 2894892
+      border_color: 4473924
+      label_color: 11908533
+      hilited_text_color: 15658734
+      hilited_back_color: 4473924
+      candidate_text_color: 15658734
+      comment_text_color: 8421504
+      hilited_candidate_text_color: 16448250
+      hilited_comment_text_color: 8947848
+      hilited_candidate_back_color: 3815994
+      hilited_label_color: 15656614
+
