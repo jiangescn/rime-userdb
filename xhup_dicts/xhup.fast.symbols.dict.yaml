@@ -1,0 +1,35 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 小鹤音形分号快符
+# 来源：官方小鹤音形_清风便携版 v1.26.9c
+
+---
+name: xhup.fast.symbols
+version: "v1.26.9c"
+sort: original
+...
+：	;
+；	;
+：“	;q
+？	;w
+（	;e
+）	;r
+《	;y
+》	;u
+「」	;o
+〈〉	;p
+！	;a
+……	;s
+、	;d
+·	;g
+《》	;h
+“”	;j
+（）	;k
+〔〕	;l
+“	;z
+→	;x
+”	;c
+——	;v
+　	;b
+@	;m

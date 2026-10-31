@@ -1,0 +1,9 @@
+patch:
+  translator/enable_user_dict: false
+  translator/enable_sentence: false
+  translator/enable_completion: false
+  menu/page_size: 7
+  style/color_scheme: soak
+  style/color_scheme_dark: soak
+  style/horizontal: true
+  style/inline_preedit: true
