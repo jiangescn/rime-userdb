@@ -4,6 +4,10 @@ import pathlib
 import re
 import tempfile
 import unittest
+import io
+import shutil
+import zipfile
+from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('rime_sync', ROOT / 'rime_sync.py')
@@ -124,6 +128,83 @@ class RuntimeCompletenessTests(unittest.TestCase):
                     for item in node:
                         inspect(item)
             inspect(source)
+
+
+class DictionaryUpdateTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='rime-update-test-', dir=ROOT.parent)
+        assert pathlib.Path(self.temp.name).resolve().is_relative_to(ROOT.parent.resolve())
+        self.addCleanup(self.temp.cleanup)
+        self.root = pathlib.Path(self.temp.name)
+        self.repo = self.root / 'repo'
+        self.repo.mkdir()
+        self.hashes = {}
+        for name in module.OFFICIAL_DICTIONARIES:
+            path = self.repo / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(self.content(name, 'old'), encoding='utf-8')
+            self.hashes[name] = module.file_hash(path)
+        module.write_json(self.repo / 'rime-ice-update.json', {'source':'https://github.com/iDvel/rime-ice','commit':'a'*40,'hashFormat':'sha256-utf8-lf','files':self.hashes})
+        (self.repo / 'RIME_ICE_VERSION.md').write_text('old version\n')
+        self.backup = self.root / 'backups'
+
+    @staticmethod
+    def content(name, label):
+        if name.endswith('.dict.yaml'):
+            stem = pathlib.PurePosixPath(name).name.removesuffix('.dict.yaml')
+            return '# source dictionary\n' * 5 + f'---\nname: {stem}\nversion: {label}\n...\nWORD\tci\t1\n'
+        return '# source table\n' * 10 + f'WORD_{label}\tcode\n'
+
+    def network(self, revision='b'*40):
+        archive = io.BytesIO()
+        with zipfile.ZipFile(archive, 'w') as output:
+            for name in module.OFFICIAL_DICTIONARIES:
+                output.writestr(f'rime-ice-{revision}/{name}', self.content(name, 'new'))
+        def response(request, timeout):
+            if '/commits/HEAD' in request.full_url:
+                return io.BytesIO(json.dumps({'sha':revision}).encode())
+            return io.BytesIO(archive.getvalue())
+        return response
+
+    def test_first_update_and_pinned_metadata(self):
+        with mock.patch.object(module.urllib.request, 'urlopen', side_effect=self.network()):
+            changed, backup = module.update_dictionaries(self.repo, self.backup)
+        self.assertEqual(len(changed), 18)
+        self.assertTrue(backup.is_dir())
+        self.assertEqual(json.loads((self.repo/'rime-ice-update.json').read_text())['commit'], 'b'*40)
+        for name, old_hash in self.hashes.items():
+            self.assertEqual(module.file_hash(backup/name), old_hash)
+
+    def test_network_failure_keeps_all_files(self):
+        with mock.patch.object(module.urllib.request, 'urlopen', side_effect=OSError('offline')):
+            with self.assertRaises(OSError):
+                module.update_dictionaries(self.repo, self.backup)
+        self.assertEqual({name:module.file_hash(self.repo/name) for name in self.hashes}, self.hashes)
+
+    def test_hand_edit_skips_network(self):
+        path = self.repo / 'cn_dicts/base.dict.yaml'
+        path.write_text(path.read_text()+'MY_WORD\tci\t9\n')
+        with mock.patch.object(module.urllib.request, 'urlopen') as network:
+            with self.assertRaisesRegex(RuntimeError, 'Hand-edited'):
+                module.update_dictionaries(self.repo, self.backup)
+            network.assert_not_called()
+        self.assertIn('MY_WORD', path.read_text())
+
+    def test_partial_replacement_restores_old_files(self):
+        original = shutil.copy2
+        count = 0
+        def copy(source, destination):
+            nonlocal count
+            source, destination = pathlib.Path(source), pathlib.Path(destination)
+            if destination.is_relative_to(self.repo) and 'official-' not in str(source):
+                count += 1
+                if count == 3:
+                    raise OSError('simulated replacement failure')
+            return original(source,destination)
+        with mock.patch.object(module.urllib.request, 'urlopen', side_effect=self.network()), mock.patch.object(module.shutil, 'copy2', side_effect=copy):
+            with self.assertRaises(OSError):
+                module.update_dictionaries(self.repo,self.backup)
+        self.assertEqual({name:module.file_hash(self.repo/name) for name in self.hashes}, self.hashes)
 
 
 if __name__ == '__main__':

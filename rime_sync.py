@@ -316,9 +316,11 @@ def main():
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     backup_root = pathlib.Path.home() / ('Library/Application Support/RimeBackups' if platform == 'macos' else '.local/share/RimeBackups')
     backup = backup_root / ('sync-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex[:8])
+    if backup.resolve().is_relative_to(user):
+        raise RuntimeError('The backup directory must be outside the Rime user directory.')
     native.pause()
     try:
-        shutil.copytree(user, backup)
+        shutil.copytree(user, backup, symlinks=True)
         sync = FileSync(repo, user, platform)
         sync.save_local()
         if not args.skip_pull:
