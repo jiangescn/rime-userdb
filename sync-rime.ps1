@@ -23,9 +23,21 @@ $ConfigFiles = @(
     "word_simp.dict.yaml",
     "word_simp.schema.yaml",
     "cn.ico",
-    "en.ico"
+    "en.ico",
+    "xhup.schema.yaml",
+    "xhup.dict.yaml",
+    "xhup_reverse.schema.yaml",
+    "xhup_reverse.dict.yaml",
+    "xhup.custom.yaml",
+    "lua/xhup/common.lua",
+    "lua/xhup/date_translator.lua",
+    "lua/xhup/time_translator.lua",
+    "lua/xhup/shortcut_processor.lua",
+    "lua/xhup/shortcut_translator.lua",
+    "opencc/short_hints.json",
+    "opencc/short_hints.txt"
 )
-$ConfigDirectories = @("cn_dicts", "en_dicts")
+$ConfigDirectories = @("cn_dicts", "en_dicts", "xhup_dicts")
 
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     throw "Git was not found in PATH. Install Git for Windows first."
@@ -150,15 +162,10 @@ if (-not $DeployerPath -or -not (Test-Path -LiteralPath $DeployerPath)) {
 
 New-Item -ItemType Directory -Path $RimeDir -Force | Out-Null
 
+. (Join-Path $RepoDir 'sync-xhup.ps1')
+$xhupPersonalChanges = @(Save-XhupPersonalEntries -RepoDir $RepoDir -RimeDir $RimeDir)
 if (-not $SkipPull) {
-    $dirtyTrackedFiles = @(& git -C $RepoDir status --porcelain --untracked-files=no)
-    if ($LASTEXITCODE -ne 0) {
-        throw "Unable to inspect the Git working tree."
-    }
-    if ($dirtyTrackedFiles.Count -gt 0) {
-        throw "The repository has tracked local changes. Commit or stash them before syncing."
-    }
-    Invoke-Git -Arguments @("pull", "--rebase", "origin", "main")
+    Invoke-XhupRepositoryPull -RepoDir $RepoDir -LocalOnly:$LocalOnly
 }
 
 # Export the current database before importing snapshots from other devices.
@@ -171,7 +178,9 @@ New-Item -ItemType Directory -Path $backupDir -Force | Out-Null
 foreach ($relativePath in $ConfigFiles) {
     $source = Join-Path $RimeDir $relativePath
     if (Test-Path -LiteralPath $source) {
-        Copy-Item -LiteralPath $source -Destination (Join-Path $backupDir $relativePath) -Force
+        $backupFile = Join-Path $backupDir $relativePath
+        New-Item -ItemType Directory -Path (Split-Path -Parent $backupFile) -Force | Out-Null
+        Copy-Item -LiteralPath $source -Destination $backupFile -Force
     }
 }
 foreach ($relativePath in $ConfigDirectories) {
@@ -210,7 +219,9 @@ foreach ($relativePath in $ConfigFiles) {
     if (-not (Test-Path -LiteralPath $source)) {
         throw "Required repository file is missing: $relativePath"
     }
-    Copy-Item -LiteralPath $source -Destination (Join-Path $RimeDir $relativePath) -Force
+    $destinationFile = Join-Path $RimeDir $relativePath
+    New-Item -ItemType Directory -Path (Split-Path -Parent $destinationFile) -Force | Out-Null
+    Copy-Item -LiteralPath $source -Destination $destinationFile -Force
 }
 foreach ($relativePath in $ConfigDirectories) {
     $source = Join-Path $RepoDir $relativePath
@@ -253,6 +264,8 @@ Invoke-Deployer -Argument "/deploy"
     throw $deploymentError
 }
 
+Write-XhupPersonalBaseline -RimeDir $RimeDir
+
 $installationFile = Join-Path $RimeDir "installation.yaml"
 if (-not (Test-Path -LiteralPath $installationFile)) {
     throw "Rime did not create installation.yaml."
@@ -279,7 +292,7 @@ $repoSnapshot = Join-Path $repoDeviceDir "rime_ice.userdb.txt"
 Copy-Item -LiteralPath $localSnapshot -Destination $repoSnapshot -Force
 
 $gitSnapshot = "sync/$installationId/rime_ice.userdb.txt"
-$commitPaths = @($gitSnapshot) + @($dictionaryUpdate.ChangedPaths)
+$commitPaths = @($gitSnapshot) + @($dictionaryUpdate.ChangedPaths) + @($XhupPersonalFiles)
 Invoke-Git -Arguments (@("add", "--") + $commitPaths)
 & git -C $RepoDir diff --cached --quiet --exit-code -- @commitPaths
 $diffExitCode = $LASTEXITCODE
@@ -291,6 +304,9 @@ if ($diffExitCode -eq 1) {
 } elseif ($diffExitCode -ne 0) {
     throw "Unable to inspect staged Git changes."
 } else {
+    if ($XhupPersonalCommitCreated) {
+        Invoke-Git -Arguments @("push", "origin", "main")
+    }
     Write-Host "The GitHub snapshot is already up to date."
 }
 

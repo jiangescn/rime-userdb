@@ -1,0 +1,114 @@
+{
+  "repository": "https://github.com/kchen0x/rime-crane",
+  "commit": "71f3add6a39d58a8e8b35abc7ca9c998d766b274",
+  "files": {
+    "licenses/rime-crane-GPL-3.0.txt": {
+      "upstreamPath": "LICENSE",
+      "gitBlob": "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7"
+    },
+    "lua/xhup/common.lua": {
+      "upstreamPath": "lua/xhup/common.lua",
+      "gitBlob": "4e21bb1e5d4a6dbaed22a12a0c986e903031d8e8"
+    },
+    "lua/xhup/date_translator.lua": {
+      "upstreamPath": "lua/xhup/date_translator.lua",
+      "gitBlob": "37517cec8c68c7b9b58ce3a207f375e974ecbf6a"
+    },
+    "lua/xhup/shortcut_processor.lua": {
+      "upstreamPath": "lua/xhup/shortcut_processor.lua",
+      "gitBlob": "4e927e5818ba39d1b0232b64d7727a22dddc5887"
+    },
+    "lua/xhup/shortcut_translator.lua": {
+      "upstreamPath": "lua/xhup/shortcut_translator.lua",
+      "gitBlob": "1ad34c63a9e9d651d470234a3b86e0d05bf4c680"
+    },
+    "lua/xhup/time_translator.lua": {
+      "upstreamPath": "lua/xhup/time_translator.lua",
+      "gitBlob": "6bb573f8c6daabddab3c9f85643225eb0b9d4f23"
+    },
+    "opencc/short_hints.json": {
+      "upstreamPath": "opencc/short_hints.json",
+      "gitBlob": "39c593a9f452d18ad5bf450da3b23436d2ce1aa3"
+    },
+    "opencc/short_hints.txt": {
+      "upstreamPath": "opencc/short_hints.txt",
+      "gitBlob": "7c88ffd1d367f1c0c741de87e373d39f462d190f"
+    },
+    "xhup.dict.yaml": {
+      "upstreamPath": "xhup.dict.yaml",
+      "gitBlob": "33e31f7ad39bc3138ccf7ed97625469a308a12d8"
+    },
+    "xhup.schema.yaml": {
+      "upstreamPath": "xhup.schema.yaml",
+      "gitBlob": "9464b39830127b51498bfe3beb22225aca028766"
+    },
+    "xhup_dicts/xhup.emoji.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.emoji.dict.yaml",
+      "gitBlob": "00345d39d9e9f55542fefa6689a7376111eb09ce"
+    },
+    "xhup_dicts/xhup.fast.symbols.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.fast.symbols.dict.yaml",
+      "gitBlob": "a9e1f40b4e07aa9a725f06d0e70a30f280515eac"
+    },
+    "xhup_dicts/xhup.full.code.chars.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.full.code.chars.yaml",
+      "gitBlob": "a2904f8538fb73ee62c941b90179d10bd05750ab"
+    },
+    "xhup_dicts/xhup.full.code.words.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.full.code.words.dict.yaml",
+      "gitBlob": "c4ac1f226db10b68da4288504d01b929b84419a6"
+    },
+    "xhup_dicts/xhup.off-table.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.off-table.dict.yaml",
+      "gitBlob": "9faaf7e31054736656cad290ed52acb3f8b3e98f"
+    },
+    "xhup_dicts/xhup.ok.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.ok.dict.yaml",
+      "gitBlob": "7c14875f6d7161ab5e5825d3d64ac43513c5e269"
+    },
+    "xhup_dicts/xhup.primary.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.primary.dict.yaml",
+      "gitBlob": "e2bc7f49bfff453ff09616d4791c3d89b568ebdf"
+    },
+    "xhup_dicts/xhup.rare.chars.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.rare.chars.dict.yaml",
+      "gitBlob": "2721c1a2bd3444e9c3dd3e53dd182a013b224691"
+    },
+    "xhup_dicts/xhup.secondary.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.secondary.dict.yaml",
+      "gitBlob": "88ae286b03175d52d6f44b9ddff65a33d5ff3678"
+    },
+    "xhup_dicts/xhup.secondary.simple.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.secondary.simple.dict.yaml",
+      "gitBlob": "4da27edcda4dcf17930c99bb24ad8245e4cb371e"
+    },
+    "xhup_dicts/xhup.single.code.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.single.code.dict.yaml",
+      "gitBlob": "a9b1d6ca96ae72658129256e49316368334e29af"
+    },
+    "xhup_dicts/xhup.symbols.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.symbols.dict.yaml",
+      "gitBlob": "da9c8640b47264093b537eed0edfb4db380f3c62"
+    },
+    "xhup_dicts/xhup.user.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.user.dict.yaml",
+      "gitBlob": "d7f3b8bb45e36dff7c55a208f690b948b7fd8076"
+    },
+    "xhup_dicts/xhup.user.top.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.user.top.dict.yaml",
+      "gitBlob": "a83fa1ba712525d39618ec5c799f68f9bc23a411"
+    },
+    "xhup_dicts/xhup.whimsicality.dict.yaml": {
+      "upstreamPath": "xhup_dicts/xhup.whimsicality.dict.yaml",
+      "gitBlob": "c8f91d8071a2a19c23e6dc780a56958517ab9d80"
+    },
+    "xhup_reverse.dict.yaml": {
+      "upstreamPath": "xhup_reverse.dict.yaml",
+      "gitBlob": "4fe0524f0c1f30d6690c94b350fc438b2f995ddb"
+    },
+    "xhup_reverse.schema.yaml": {
+      "upstreamPath": "xhup_reverse.schema.yaml",
+      "gitBlob": "c84b2e2e995410bf6fcc1fa51147f3c67e76da4c"
+    }
+  }
+}
