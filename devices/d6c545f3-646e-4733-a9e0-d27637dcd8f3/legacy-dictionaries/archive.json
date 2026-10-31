@@ -1,0 +1,7 @@
+{
+  "purpose": "Preserve the extra pre-migration Mac dictionary without renaming it or changing the shared frequency_databases contract.",
+  "database": "luna_pinyin",
+  "active_schema": "double_pinyin_flypy",
+  "automatic_cross_device_merge": false,
+  "entries": 1
+}
